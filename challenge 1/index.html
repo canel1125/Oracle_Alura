@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body class="flex">
+    <section class="flex logo">
+        <img src="media/Logo.png" alt="logo alura" />
+    </section>
+    <section class="flex container">
+        <section class="flex container-area">
+            <section class="flex container-text">
+                <textarea class="texto" placeholder="Ingrese el texto aqui" id="textoIngresado"></textarea>
+                <div class="flex container-footer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-exclamation-circle-fill " viewBox="0 0 16 16">
+                        <path
+                            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2" />
+                    </svg>
+                    <span>Solo letras minúsculas y sin acentos</span>
+                </div>
+            </section>
+            <section class="flex container-buttons">
+                <button id="encriptar">Encriptar</button>
+                <button id="desencriptar">Desencriptar</button>
+            </section>
+        </section>
+        <section class="flex container-area">
+            <div class="flex container-msj">
+                <section class="container-img">
+                    <img src="media/Muñeco.png" alt="" />
+                </section>
+                <section class="flex container-alert">
+                    <p>Ningún mensaje fue encontrado</p>
+                    <p>Ingresa el texto que desees encriptar o desencriptar.</p>
+                </section>
+            </div>
+        </section>
+    </section>
+
+</body>
+
+</html>
+
+<script>
+    function encriptar(texto) {
+        let comprimido = ""
+        for (let i = 0; i < texto.length; i++) {
+            comprimido += texto[i];
+
+            if (texto[i] == "e") {
+                comprimido += "nter";
+            }
+            if (texto[i] == "i") {
+                comprimido += "mes";
+            }
+            if (texto[i] == "a") {
+                comprimido += "i";
+            }
+            if (texto[i] == "o") {
+                comprimido += "ber";
+            }
+            if (texto[i] == "u") {
+                comprimido += "fat";
+            }
+        }
+        return comprimido;
+
+    }
+    function desencriptar(texto) {
+        let descomprimido = ""
+        for (let i = 0; i < texto.length; i++) {
+            descomprimido += texto[i];
+            if (texto[i] == "e") {
+                if (texto[i + 1] == "n" && texto[i + 2] == "t" && texto[i + 3] == "e" && texto[i + 4] == "r") {
+                    i += 4;
+                }
+            }
+            if (texto[i] == "i") {
+                if (texto[i + 1] == "m" && texto[i + 2] == "e" && texto[i + 3] == "s") {
+                    i += 3;
+                }
+            }
+            if (texto[i] == "a") {
+                if (texto[i + 1] == "i") {
+                    i += 1;
+                }
+            }
+            if (texto[i] == "o") {
+                if (texto[i + 1] == "b" && texto[i + 2] == "e" && texto[i + 3] == "r") {
+                    i += 3;
+                }
+            }
+            if (texto[i] == "u") {
+                if (texto[i + 1] == "f" && texto[i + 2] == "a" && texto[i + 3] == "t") {
+                    i += 3;
+                }
+            }
+        }
+        return descomprimido;
+    }
+    function copiarTexto(texto) {
+        navigator.clipboard.writeText(texto);
+        alert("Texto copiado");
+    }
+
+    document.getElementById('encriptar').addEventListener('click', function () {
+        var textarea = document.getElementById('textoIngresado');
+        var text = textarea.value;
+        var containerMsj = document.querySelector('.container-msj');
+
+        if (text) {
+            var mensajeEncriptado = encriptar(text);
+            containerMsj.innerHTML = `<p class="resultado" id="resultado">${mensajeEncriptado}</p>
+                <button id="botonCopiar" onclick="copiarTexto('${mensajeEncriptado}')">Copiar</button>`;
+        } else {
+            containerMsj.innerHTML = `<section class="container-img">
+            <img src="media/Muñeco.png" alt="" />
+        </section>
+        <section class="flex container-alert">
+            <p>Ningún mensaje fue encontrado</p>
+            <p>Ingresa el texto que desees encriptar o desencriptar.</p>
+        </section>`;
+        }
+    });
+
+    document.getElementById('desencriptar').addEventListener('click', function () {
+        var textarea = document.getElementById('textoIngresado');
+        var text = textarea.value;
+        var containerMsj = document.querySelector('.container-msj');
+
+        if (text) {
+            var mensajeDesencriptado = desencriptar(text);
+            containerMsj.innerHTML = `<p class="resultado">${mensajeDesencriptado}</p>
+                <button id="botonCopiar" onclick="copiarTexto('${mensajeDesencriptado}')">Copiar</button>`;
+        } else {
+            containerMsj.innerHTML = `<section class="container-img">
+            <img src="media/Muñeco.png" alt="" />
+        </section>
+        <section class="flex container-alert">
+            <p>Ningún mensaje fue encontrado</p>
+            <p>Ingresa el texto que desees encriptar o desencriptar.</p>
+        </section>`;
+        }
+    });
+
+</script>
